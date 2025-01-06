@@ -12,3 +12,8 @@ exports.getUserByEmail = async (email) => {
     const [rows] = await db.query("SELECT * FROM Users WHERE email = ?", [email]);
     return rows[0];
 };
+
+exports.getUserByUsername = async (username) => {
+    const [rows] = await db.query("SELECT * FROM Users WHERE username = ?", [username]);
+    return rows[0];
+  };

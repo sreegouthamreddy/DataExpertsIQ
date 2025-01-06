@@ -1,0 +1,233 @@
+{
+    "info": {
+      "name": "DataExpertsIQ API",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+      "_postman_id": "12345-6789-0123-4567"
+    },
+    "item": [
+      {
+        "name": "Local",
+        "item": [
+          {
+            "name": "Auth - Signup",
+            "request": {
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"testuser@example.com\",\n  \"password\": \"password123\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "http://localhost:3000/api/auth/signup",
+                "host": ["http://localhost:3000"],
+                "path": ["api", "auth", "signup"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Auth - Login",
+            "request": {
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"email\": \"testuser@example.com\",\n  \"password\": \"password123\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "http://localhost:3000/api/auth/login",
+                "host": ["http://localhost:3000"],
+                "path": ["api", "auth", "login"]
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "exec": [
+                    "let response = pm.response.json();",
+                    "pm.environment.set(\"auth_token\", response.token);"
+                  ],
+                  "type": "text/javascript"
+                }
+              }
+            ]
+          },
+          {
+            "name": "Notes - Get All Notes",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{auth_token}}",
+                  "type": "text"
+                }
+              ],
+              "url": {
+                "raw": "http://localhost:3000/api/notes",
+                "host": ["http://localhost:3000"],
+                "path": ["api", "notes"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Notes - Create Note",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{auth_token}}",
+                  "type": "text"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"title\": \"Sample Note\",\n  \"content\": \"This is a sample note content.\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "http://localhost:3000/api/notes",
+                "host": ["http://localhost:3000"],
+                "path": ["api", "notes"]
+              }
+            },
+            "response": []
+          }
+        ]
+      },
+      {
+        "name": "AWS",
+        "item": [
+          {
+            "name": "Auth - Signup",
+            "request": {
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"testuser@example.com\",\n  \"password\": \"password123\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "https://placeholder-for-aws/api/auth/signup",
+                "host": ["https://placeholder-for-aws"],
+                "path": ["api", "auth", "signup"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Auth - Login",
+            "request": {
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"email\": \"testuser@example.com\",\n  \"password\": \"password123\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "https://placeholder-for-aws/api/auth/login",
+                "host": ["https://placeholder-for-aws"],
+                "path": ["api", "auth", "login"]
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "exec": [
+                    "let response = pm.response.json();",
+                    "pm.environment.set(\"auth_token\", response.token);"
+                  ],
+                  "type": "text/javascript"
+                }
+              }
+            ]
+          },
+          {
+            "name": "Notes - Get All Notes",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{auth_token}}",
+                  "type": "text"
+                }
+              ],
+              "url": {
+                "raw": "https://placeholder-for-aws/api/notes",
+                "host": ["https://placeholder-for-aws"],
+                "path": ["api", "notes"]
+              }
+            },
+            "response": []
+          },
+          {
+            "name": "Notes - Create Note",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{auth_token}}",
+                  "type": "text"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"title\": \"Sample Note\",\n  \"content\": \"This is a sample note content.\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "https://placeholder-for-aws/api/notes",
+                "host": ["https://placeholder-for-aws"],
+                "path": ["api", "notes"]
+              }
+            },
+            "response": []
+          }
+        ]
+      }
+    ],
+    "variable": [
+      {
+        "key": "auth_token",
+        "value": "",
+        "type": "string"
+      }
+    ]
+  }
+  

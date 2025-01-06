@@ -10,11 +10,12 @@ exports.signup = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-    const { email, password } = req.body;
-    const user = await User.getUserByEmail(email);
+    const { username, password } = req.body;
+    const user = await User.getUserByUsername(username); // Update this to fetch user by username
     if (!user || !(await bcrypt.compare(password, user.password_hash))) {
-        return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: 'Invalid credentials' });
     }
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.json({ token });
-};
+  };
+  
