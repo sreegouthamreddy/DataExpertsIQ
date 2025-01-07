@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 
 const corsOptions = {
-    origin: 'http://localhost:3001', // Replace with your frontend's origin
+    origin: 'https://d1yyjy4issk7t9.cloudfront.net', // Replace with your frontend's origin
     methods: 'GET,POST,PUT,DELETE',
     allowedHeaders: 'Content-Type,Authorization',
   };
