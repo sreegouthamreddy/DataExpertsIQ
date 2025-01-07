@@ -1,31 +1,32 @@
-const db = require('../config/db');
+let notes = []; // Temporary in-memory storage for notes
 
-exports.getNotes = async (req, res) => {
-    const [notes] = await db.query("SELECT * FROM Notes WHERE user_id = ?", [req.user.id]);
-    res.json(notes);
+exports.getAllNotes = (req, res) => {
+  const userNotes = notes.filter((note) => note.userId === req.user.id);
+  res.json(userNotes);
 };
 
-exports.addNote = async (req, res) => {
-    const { title, content } = req.body;
-    const [result] = await db.query(
-        "INSERT INTO Notes (user_id, title, content) VALUES (?, ?, ?)",
-        [req.user.id, title, content]
-    );
-    res.status(201).json({ id: result.insertId });
+exports.addNote = (req, res) => {
+  const { title, content } = req.body;
+  const note = { id: Date.now(), title, content, userId: req.user.id };
+  notes.push(note);
+  res.status(201).json(note);
 };
 
-exports.updateNote = async (req, res) => {
-    const { id } = req.params;
-    const { title, content } = req.body;
-    await db.query(
-        "UPDATE Notes SET title = ?, content = ? WHERE id = ? AND user_id = ?",
-        [title, content, id, req.user.id]
-    );
-    res.json({ message: 'Note updated' });
+exports.updateNote = (req, res) => {
+  const { id } = req.params;
+  const { title, content } = req.body;
+  const noteIndex = notes.findIndex((note) => note.id === parseInt(id) && note.userId === req.user.id);
+  if (noteIndex === -1) return res.status(404).json({ message: 'Note not found' });
+
+  notes[noteIndex] = { ...notes[noteIndex], title, content };
+  res.json(notes[noteIndex]);
 };
 
-exports.deleteNote = async (req, res) => {
-    const { id } = req.params;
-    await db.query("DELETE FROM Notes WHERE id = ? AND user_id = ?", [id, req.user.id]);
-    res.json({ message: 'Note deleted' });
+exports.deleteNote = (req, res) => {
+  const { id } = req.params;
+  const noteIndex = notes.findIndex((note) => note.id === parseInt(id) && note.userId === req.user.id);
+  if (noteIndex === -1) return res.status(404).json({ message: 'Note not found' });
+
+  notes.splice(noteIndex, 1);
+  res.status(204).send();
 };
