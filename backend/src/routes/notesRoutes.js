@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const notesController = require('../controllers/notesController');
-const authenticateToken = require('../middlewares/authenticateToken');
+const authenticateToken = require('../middleware/authenticateToken');
 
 router.get('/', authenticateToken, notesController.getAllNotes);
 router.post('/', authenticateToken, notesController.addNote);
