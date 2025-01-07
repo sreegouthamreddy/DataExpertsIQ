@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import api from '../services/api';
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../services/api";
+import { AuthContext } from "../App";
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const location = useLocation();
+  const { setIsLoggedIn } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const { data } = await api.post('/auth/login', { username, password });
       localStorage.setItem('token', data.token);
+      setIsLoggedIn(true);
       navigate('/landing');
     } catch (err) {
       setError('Invalid login credentials.');
@@ -23,9 +25,6 @@ const Login = () => {
   return (
     <div className="container mx-auto py-20">
       <h1 className="text-2xl font-bold mb-4 text-center">Login</h1>
-      {location.state?.success && (
-        <p className="text-green-500 text-center mb-4">{location.state.success}</p>
-      )}
       {error && <p className="text-red-500 text-center mb-4">{error}</p>}
       <form onSubmit={handleSubmit} className="max-w-md mx-auto">
         <label className="block text-sm font-bold mb-2">Username</label>
