@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../services/api";
 
 const NotesPage = () => {
   const [notes, setNotes] = useState([]);
@@ -8,13 +8,6 @@ const NotesPage = () => {
   const [editingNote, setEditingNote] = useState(null);
 
   const token = localStorage.getItem("token"); // Get the JWT token
-
-  const api = axios.create({
-    baseURL: "http://localhost:3000/api", // Replace with your backend API base URL
-    headers: {
-      Authorization: `Bearer ${token}`, // Include the token in the header
-    },
-  });
 
   // Fetch notes on component load
   useEffect(() => {

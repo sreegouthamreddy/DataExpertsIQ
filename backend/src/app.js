@@ -9,12 +9,20 @@ dotenv.config();
 
 const app = express();
 
+// Update this with your CloudFront domain
+const allowedOrigins = ['https://d1yyjy4issk7t9.cloudfront.net'];
+
 const corsOptions = {
-    origin: 'https://d1yyjy4issk7t9.cloudfront.net', // Replace with your frontend's origin
-    methods: 'GET,POST,PUT,DELETE',
-    allowedHeaders: 'Content-Type,Authorization',
-  };
-  
+  origin: function (origin, callback) {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true, // Allow credentials like cookies or auth headers
+};
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
