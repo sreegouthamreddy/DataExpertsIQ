@@ -7,8 +7,6 @@ const NotesPage = () => {
   const [content, setContent] = useState("");
   const [editingNote, setEditingNote] = useState(null);
 
-  const token = localStorage.getItem("token"); // Get the JWT token
-
   // Fetch notes on component load
   useEffect(() => {
     const fetchNotes = async () => {
